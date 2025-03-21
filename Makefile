@@ -180,7 +180,6 @@ starter_dev: generate-secrets
 	cp default_settings.txt ./codebase/assets/patches
 	$(MAKE) set-files-owner SRC=$(CURDIR)/codebase ENVIRONMENT=starter_dev
 	$(MAKE) compose-up
-	docker compose exec -T -u nginx drupal sh -c 'git config --global --add safe.directory /var/www/drupal'
 	docker compose exec -T -u nginx drupal sh -c 'composer install'
 	$(MAKE) starter-finalize ENVIRONMENT=starter_dev
 
@@ -516,6 +515,11 @@ ifndef SRC
 endif
 	@echo "Changing ownership of $(SRC) to $(shell id -u):101"
 	@if sudo chown -R $(shell id -u):101 $(SRC); then \
+		echo "Ownership changed successfully."; \
+	else \
+		echo "Error: Failed to change ownership."; \
+	fi
+	@if sudo chown -R $(shell id -u):101 $(SRC)/.git; then \
 		echo "Ownership changed successfully."; \
 	else \
 		echo "Error: Failed to change ownership."; \

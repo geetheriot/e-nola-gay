@@ -15,7 +15,7 @@ services:
     restart: ${RESTART_POLICY:-unless-stopped}
     image: ${REPOSITORY:-islandora}/drupal:${TAG:-latest}
     volumes:
-      - ../../codebase:/var/www/drupal:delegated
+      - ../../codebase:/var/www/drupal:z,rw,consistent
       - drupal-sites-data:/var/www/drupal/web/sites/default/files
       - solr-data:/opt/solr/server/solr
     environment:
