@@ -31,8 +31,8 @@ jobs:
           ./build/scripts/check-secrets.sh yes
         shell: bash
 
-      - name: make starter
-        run: make starter
+      - name: make starter_dev
+        run: make starter_dev
         shell: bash
 
       - name: check online
