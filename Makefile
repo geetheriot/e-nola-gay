@@ -180,6 +180,7 @@ starter_dev: generate-secrets
 	cp default_settings.txt ./codebase/assets/patches
 	$(MAKE) set-files-owner SRC=$(CURDIR)/codebase ENVIRONMENT=starter_dev
 	$(MAKE) compose-up
+	docker compose exec -T -u nginx drupal sh -c 'git config --global --add safe.directory /var/www/drupal'
 	docker compose exec -T -u nginx drupal sh -c 'composer install'
 	$(MAKE) starter-finalize ENVIRONMENT=starter_dev
 
@@ -519,7 +520,6 @@ endif
 	else \
 		echo "Error: Failed to change ownership."; \
 	fi
-
 
 # RemovesForces the site uuid to match that in the config_sync_directory so that
 # configuration can be imported.
